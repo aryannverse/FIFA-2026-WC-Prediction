@@ -80,7 +80,7 @@ $$\text{Goals}_1 \sim \text{Poisson}(\lambda_1)$$
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/aryannverse/Fifa-2026-WC-Prediction-.git
+git clone https://github.com/aryannverse/FIFA-2026-WC-Prediction-.git
 cd Football-Analysis
 ```
 
