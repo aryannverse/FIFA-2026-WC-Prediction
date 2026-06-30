@@ -26,7 +26,7 @@ An end-to-end machine learning analytical dashboard and simulation engine design
 *   **Poisson Scoreline Generator**: Generates realistic scorelines using random Poisson draws modeled from teams' offensive/defensive form and Elo ratings.
 
 
-<img width="3336" height="1242" alt="Preview" src="https://github.com/user-attachments/assets/3ca58ef6-c9fe-4b2c-aed5-ac9e098bb730" />
+<img width="3336" height="1242" alt="Preview" src="https://github.com/user-attachments/assets/b27ba10e-bd5e-460d-9aa8-88e59a5c7d3a" />
 
 
 ---
