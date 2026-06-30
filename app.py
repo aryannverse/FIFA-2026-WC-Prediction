@@ -127,34 +127,38 @@ FLAG_MAP = {
 }
 
 
-@st.cache_resource
-def load_data():
-    try:
-        import sklearn
-        with open("models/dashboard_data.pkl", "rb") as f:
-            data = pickle.load(f)
-        if data.get('sklearn_version') != sklearn.__version__:
-            raise ValueError(f"scikit-learn version mismatch: data={data.get('sklearn_version')}, env={sklearn.__version__}")
-        return data
-    except Exception as e:
-        import subprocess
-        import os
-        import sys
-        st.info(f"Pickle mismatch or model missing ({e}). Running data pipeline to regenerate model files...")
-        os.makedirs("models", exist_ok=True)
-        result = subprocess.run([sys.executable, "prepare_data.py"], capture_output=True, text=True)
-        if result.returncode != 0:
-            st.error(f"Data pipeline failed with exit code {result.returncode}.\n\nStderr:\n{result.stderr}\n\nStdout:\n{result.stdout}")
-            st.stop()
-        with open("models/dashboard_data.pkl", "rb") as f:
-            data = pickle.load(f)
-        return data
+import os
+import sys
+import subprocess
+import sklearn
 
-try:
-    data = load_data()
-except Exception as e:
-    st.error(f"Failed to load pickled model data: {e}. Please check project files.")
-    st.stop()
+need_regenerate = False
+if not os.path.exists("models/dashboard_data.pkl"):
+    need_regenerate = True
+else:
+    try:
+        with open("models/dashboard_data.pkl", "rb") as f:
+            temp_data = pickle.load(f)
+        if temp_data.get('sklearn_version') != sklearn.__version__:
+            need_regenerate = True
+    except Exception:
+        need_regenerate = True
+
+if need_regenerate:
+    st.info("Pickle version mismatch or model missing. Running data pipeline to regenerate models (takes ~10s)...")
+    os.makedirs("models", exist_ok=True)
+    result = subprocess.run([sys.executable, "prepare_data.py"], capture_output=True, text=True)
+    if result.returncode != 0:
+        st.error(f"Data pipeline failed with exit code {result.returncode}.\n\nStderr:\n{result.stderr}\n\nStdout:\n{result.stdout}")
+        st.stop()
+    st.rerun()
+
+@st.cache_resource
+def get_cached_data():
+    with open("models/dashboard_data.pkl", "rb") as f:
+        return pickle.load(f)
+
+data = get_cached_data()
 
 
 clf = data['models']['match_classifier']
