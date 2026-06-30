@@ -52,7 +52,6 @@ An end-to-end machine learning analytical dashboard and simulation engine design
 │   └── dashboard_data.pkl
 ├── app.py
 ├── prepare_data.py
-├── create_notebook.py
 ├── requirements.txt
 └── EDA.ipynb
 ```
