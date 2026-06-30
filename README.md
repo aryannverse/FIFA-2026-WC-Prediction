@@ -66,8 +66,7 @@ $$R_{\text{new}} = R_{\text{old}} + K \times (S - E)$$
 *   **Elo Scaling**: Elo features are scaled (divided by 400.0) before fitting to prevent exponential overflow in the Poisson log-link function.
 
 ### 📉 2. Linear-Decay Form Curves
-A team's recent form (points accumulated, goals scored, and goals conceded) is computed using a linear decay average over their last 10 matches, giving higher weight to the most recent games:
-$$\text{Form} = \frac{\sum_{i=1}^{n} (n - i + 1) \times \text{Metric}_i}{\sum_{i=1}^{n} (n - i + 1)}$$
+A team's recent form (points accumulated, goals scored, and goals conceded) is computed using a linear decay average over their last 10 matches, giving higher weight to the most recent games.
 
 ### ⚽ 3. Goal Modeling (Poisson Regression)
 Expected goals (xG) are modeled using a Poisson generalized linear model (GLM) with a log-link function:
